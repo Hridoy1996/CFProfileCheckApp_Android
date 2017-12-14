@@ -1,6 +1,7 @@
 package finalcf.magadistudio.com.finalcf;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -31,15 +32,18 @@ import java.util.Objects;
 import static finalcf.magadistudio.com.finalcf.Main2Activity.*;
 
 public class MainActivity extends Activity  {
+    private ProgressDialog progressDialog;
     public static String ss=null;
     EditText name;
     int  chk  =0;
     String profile =null;
 
     public  void login(View view) {
-
+        progressDialog = ProgressDialog.show(this, "","Please Wait...", true);
         if (!isOnline()) {
+            progressDialog.dismiss();
             Toast.makeText(getApplication(), "internet connection failed", Toast.LENGTH_LONG).show();
+
         }
         else {
 
@@ -50,6 +54,7 @@ public class MainActivity extends Activity  {
             DownloadTask task = new DownloadTask();
 
             task.execute("http://codeforces.com/api/user.info?handles=" + ss);
+
         }
     }
 
@@ -119,7 +124,7 @@ public class MainActivity extends Activity  {
         }
 
             Intent intent =new Intent(MainActivity.this,Main2Activity.class);
-
+            progressDialog.dismiss();
             if(chk==1) {
                 startActivity(intent);
                 chk=0;
