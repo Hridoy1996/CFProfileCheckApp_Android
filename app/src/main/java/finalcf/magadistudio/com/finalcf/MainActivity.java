@@ -1,8 +1,10 @@
 package finalcf.magadistudio.com.finalcf;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -21,6 +23,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.InetAddress;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Objects;
@@ -33,24 +36,30 @@ public class MainActivity extends Activity  {
     int  chk  =0;
     String profile =null;
 
-    public  void login(View view)
-    {
+    public  void login(View view) {
 
-       ss= name.getText().toString();
-        if( ss.isEmpty()) {
-            Toast.makeText(getApplication(), "khaili", Toast.LENGTH_LONG).show();
+        if (!isOnline()) {
+            Toast.makeText(getApplication(), "internet connection failed", Toast.LENGTH_LONG).show();
         }
-        else{
+        else {
+
+        ss = name.getText().toString();
+        if (ss.isEmpty()) {
+            Toast.makeText(getApplication(), "Blank text", Toast.LENGTH_LONG).show();
+        } else {
             DownloadTask task = new DownloadTask();
 
-            task.execute("http://codeforces.com/api/user.info?handles="+ss);
+            task.execute("http://codeforces.com/api/user.info?handles=" + ss);
         }
-
-
+    }
 
     }
 
 
+    public boolean isOnline() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        return cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnectedOrConnecting();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +68,9 @@ public class MainActivity extends Activity  {
         name=(EditText) findViewById(R.id.nn);
 
 
+
     }
+
     public class DownloadTask extends AsyncTask<String, Void, String> {
         String stattus=null;
 
