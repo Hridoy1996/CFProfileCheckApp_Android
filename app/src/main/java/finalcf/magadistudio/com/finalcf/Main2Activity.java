@@ -2,6 +2,7 @@ package finalcf.magadistudio.com.finalcf;
 
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
@@ -33,7 +34,7 @@ public class Main2Activity extends Activity {
 
 
     public void onclick_profile (View view){
-
+         ProgressDialog progressDialog;
         Intent intent1 =new Intent(Main2Activity.this,Main4Activity.class);
         startActivity(intent1);
     }

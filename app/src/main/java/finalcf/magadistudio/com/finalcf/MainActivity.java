@@ -32,11 +32,20 @@ import java.util.Objects;
 import static finalcf.magadistudio.com.finalcf.Main2Activity.*;
 
 public class MainActivity extends Activity  {
+     DatabaseHandler db = new DatabaseHandler(this);
+
     private ProgressDialog progressDialog;
     public static String ss=null;
     EditText name;
     int  chk  =0;
     String profile =null;
+
+    public void HistoryClick(View view){
+        Intent intent =new Intent(MainActivity.this,HistoryList.class);
+
+        startActivity(intent);
+
+    }
 
     public  void login(View view) {
         progressDialog = ProgressDialog.show(this, "","Please Wait...", true);
@@ -49,9 +58,11 @@ public class MainActivity extends Activity  {
 
         ss = name.getText().toString();
         if (ss.isEmpty()) {
+            progressDialog.dismiss();
             Toast.makeText(getApplication(), "Blank text", Toast.LENGTH_LONG).show();
         } else {
             DownloadTask task = new DownloadTask();
+
 
             task.execute("http://codeforces.com/api/user.info?handles=" + ss);
 
@@ -71,6 +82,8 @@ public class MainActivity extends Activity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         name=(EditText) findViewById(R.id.nn);
+
+        db.deleteAll();
 
 
 
@@ -126,6 +139,7 @@ public class MainActivity extends Activity  {
             Intent intent =new Intent(MainActivity.this,Main2Activity.class);
             progressDialog.dismiss();
             if(chk==1) {
+                db.addContact(new Contact(ss));
                 startActivity(intent);
                 chk=0;
             }
