@@ -32,5 +32,6 @@ public class HistoryList extends Activity {
 
         ArrayAdapter<String> araadapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,making_list);
         lstvw.setAdapter(araadapter);
+
     }
 }

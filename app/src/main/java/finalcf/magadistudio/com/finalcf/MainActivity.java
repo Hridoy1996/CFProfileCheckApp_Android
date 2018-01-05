@@ -37,7 +37,7 @@ public class MainActivity extends Activity  {
     private ProgressDialog progressDialog;
     public static String ss=null;
     EditText name;
-    int  chk  =0;
+    int  chk  =1;
     String profile =null;
 
     public void HistoryClick(View view){
@@ -90,6 +90,7 @@ public class MainActivity extends Activity  {
     }
 
     public class DownloadTask extends AsyncTask<String, Void, String> {
+        int check_json=0;
         String stattus=null;
 
         @Override
@@ -111,14 +112,20 @@ public class MainActivity extends Activity  {
                     res += current;
                     data = reader.read();
                 }
+                if(res.equals("")){
+                    check_json=0;
+                }
 
             } catch (MalformedURLException e) {
+
                 e.printStackTrace();
             } catch (IOException e) {
+
                 e.printStackTrace();
             }
 
             return res;
+
         }
 
         @Override
@@ -127,29 +134,29 @@ public class MainActivity extends Activity  {
             super.onPostExecute(res);
             try {
                 JSONObject jsonObject = new JSONObject(res);
-                 profile = jsonObject.getString("status");
-        if(!profile.isEmpty()) chk = 1 ;
+                profile = jsonObject.getString("status");
+                if (!profile.isEmpty()) chk = 1;
                 else chk = 0;
 
 
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+            } catch (JSONException e) {
 
-            Intent intent =new Intent(MainActivity.this,Main2Activity.class);
+                e.printStackTrace();
+            }
+
+            Intent intent = new Intent(MainActivity.this, Main2Activity.class);
             progressDialog.dismiss();
-            if(chk==1) {
-                db.addContact(new Contact(ss));
-                startActivity(intent);
-                chk=0;
-            }
-                else{
 
-                Toast.makeText(getApplication()," wrong handle name ",Toast.LENGTH_LONG).show();
+             if (check_json == 0) {
+                if (chk == 1) {
+                    db.addContact(new Contact(ss));
+                    startActivity(intent);
+                    chk = 0;
+                } else
+                    Toast.makeText(getApplication(), " connection faild ! ", Toast.LENGTH_LONG).show();
 
-            }
-
-
+            } else
+                Toast.makeText(getApplication(), " wrong handle name ", Toast.LENGTH_LONG).show();
 
         }
     }

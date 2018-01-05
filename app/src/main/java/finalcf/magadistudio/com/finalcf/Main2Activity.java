@@ -25,6 +25,8 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 import static android.R.attr.name;
 
 public class Main2Activity extends Activity {
@@ -34,7 +36,7 @@ public class Main2Activity extends Activity {
 
 
     public void onclick_profile (View view){
-         ProgressDialog progressDialog;
+        ProgressDialog progressDialog;
         Intent intent1 =new Intent(Main2Activity.this,Main4Activity.class);
         startActivity(intent1);
     }
@@ -128,8 +130,11 @@ public class Main2Activity extends Activity {
 
         protected void onPostExecute(Drawable drawable) {
             if (drawable != null) {
-                ImageView imageView = (ImageView) findViewById(R.id.imageView);
-                imageView.setBackgroundDrawable(drawable);
+
+                CircleImageView imageView = (CircleImageView) findViewById(R.id.imageView);
+             //   imageView.setBackground(drawable);
+                imageView.setImageDrawable(drawable);
+
             }
         }
 

@@ -9,28 +9,9 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="@drawable/nextt"
-    tools:context="jsn.magadistudio.com.jsn.Main3Activity">
+   android:background="@drawable/picbk"
+    tools:context="jsn.magadistudio.com.jsn.Main2Activity">
 
-
-    <ImageView
-        android:layout_width="150dp"
-        android:layout_height="100dp"
-        android:id="@+id/imageView"
-        android:layout_above="@+id/textView2"
-        android:layout_alignEnd="@+id/textView2"
-        android:layout_marginBottom="11dp" />
-
-    <TextView
-        android:text=""
-        android:layout_width="200dp"
-        android:layout_height="34dp"
-        android:id="@+id/textView2"
-        android:textColor="#4cbb17"
-
-        android:layout_above="@+id/button4"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="34dp" />
 
     <Button
 
@@ -42,5 +23,27 @@
         android:layout_marginBottom="90dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/imageView"
+        android:layout_width="96dp"
+        android:layout_height="96dp"
+        android:src="@drawable/next"
+        app:civ_border_width="5dp"
+        app:civ_border_color="#1f4684"
+        android:layout_above="@+id/textView2"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="56dp" />
+
+    <TextView
+        android:text=""
+        android:layout_width="200dp"
+        android:layout_height="34dp"
+        android:id="@+id/textView2"
+        android:textColor="#4cbb17"
+
+        android:layout_marginBottom="32dp"
+        android:layout_above="@+id/button4"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>
