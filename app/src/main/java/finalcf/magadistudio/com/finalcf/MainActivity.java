@@ -37,7 +37,7 @@ public class MainActivity extends Activity  {
     private ProgressDialog progressDialog;
     public static String ss=null;
     EditText name;
-    int  chk  =1;
+    int  chk  =0;
     String profile =null;
 
     public void HistoryClick(View view){
@@ -82,10 +82,6 @@ public class MainActivity extends Activity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         name=(EditText) findViewById(R.id.nn);
-
-        db.deleteAll();
-
-
 
     }
 
