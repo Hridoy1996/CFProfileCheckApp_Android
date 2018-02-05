@@ -4,19 +4,17 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
+import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -24,15 +22,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.InetAddress;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Objects;
-
-import static finalcf.magadistudio.com.finalcf.Main2Activity.*;
+import java.util.List;
 
 public class MainActivity extends Activity  {
-     DatabaseHandler db = new DatabaseHandler(this);
+
 
     private ProgressDialog progressDialog;
     public static String ss=null;
@@ -81,7 +76,34 @@ public class MainActivity extends Activity  {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        name=(EditText) findViewById(R.id.nn);
+        name=(AutoCompleteTextView) findViewById(R.id.nn);
+        DatabaseHandler db = new DatabaseHandler(this);
+
+
+        List<Contact> contacts = db.getAllContacts();
+        int i=0;
+
+        for(Contact cn : contacts ){
+
+                 i++;
+        }
+        String[] str=new String[i];
+
+     i=0;
+
+        for(Contact cn : contacts ){
+
+            str[i++]=  cn.getName();
+        }
+
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>
+                (this,android.R.layout.select_dialog_item,str);
+        //Getting the instance of AutoCompleteTextView
+        AutoCompleteTextView actv= (AutoCompleteTextView)findViewById(R.id.nn);
+        actv.setThreshold(1);//will start working from first character
+        actv.setAdapter(adapter);//setting the adapter data into the AutoCompleteTextView
+        actv.setTextColor(Color.RED);
 
     }
 
@@ -107,9 +129,10 @@ public class MainActivity extends Activity  {
                     char current = (char) data;
                     res += current;
                     data = reader.read();
+                    check_json=1;
                 }
                 if(res.equals("")){
-                    check_json=0;
+
                 }
 
             } catch (MalformedURLException e) {
@@ -143,16 +166,18 @@ public class MainActivity extends Activity  {
             Intent intent = new Intent(MainActivity.this, Main2Activity.class);
             progressDialog.dismiss();
 
-             if (check_json == 0) {
+             if (check_json == 1) {
                 if (chk == 1) {
-                    db.addContact(new Contact(ss));
+
                     startActivity(intent);
                     chk = 0;
                 } else
                     Toast.makeText(getApplication(), " connection faild ! ", Toast.LENGTH_LONG).show();
 
-            } else
-                Toast.makeText(getApplication(), " wrong handle name ", Toast.LENGTH_LONG).show();
+            } else {
+                 Toast.makeText(getApplication(), " wrong handle name ", Toast.LENGTH_LONG).show();
+                 check_json=0;
+             }
 
         }
     }

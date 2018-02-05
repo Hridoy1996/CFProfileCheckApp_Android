@@ -10,14 +10,11 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="finalcf.magadistudio.com.finalcf.HistoryList">
 
-    <ListView
+    <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:headerDividersEnabled="false"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/listviewid"
-        android:dividerHeight="5dp"
-        android:divider="#45ff45"
-        android:background="#d452"/>
+        android:id="@+id/recyclerView"
+        >
+
+    </android.support.v7.widget.RecyclerView>
 </RelativeLayout>

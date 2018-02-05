@@ -24,6 +24,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String TABLE_CONTACTS = "contacts";
     private static final String KEY_ID = "id";
     private static final String KEY_NAME = "name";
+    private static final String KEY_IMAGEURL ="imageurl";
 
     public DatabaseHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -32,7 +33,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         String CREATE_CONTACTS_TABLE = "CREATE TABLE " + TABLE_CONTACTS + "("
-                + KEY_ID + " integer primary key autoincrement, " + KEY_NAME + " text not null unique " + ")";
+                + KEY_ID + " integer primary key autoincrement,  " + KEY_NAME +" text not null unique, " + KEY_IMAGEURL + " text " + ")";
         db.execSQL(CREATE_CONTACTS_TABLE);
     }
 
@@ -47,6 +48,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         ContentValues values = new ContentValues();
         values.put(KEY_NAME, contact.getName());
+        values.put(KEY_IMAGEURL,contact.get_imageurl());
         db.insert(TABLE_CONTACTS, null, values);
         db.close();
     }
@@ -55,13 +57,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = db.query(TABLE_CONTACTS, new String[] { KEY_ID,
-                        KEY_NAME }, KEY_ID + "=?",
+                        KEY_NAME , KEY_IMAGEURL }, KEY_ID + "=?",
                 new String[] { String.valueOf(id) }, null, null, null, null);
         if (cursor != null)
             cursor.moveToFirst();
 
         Contact contact = new Contact(Integer.parseInt(cursor.getString(0)),
-                cursor.getString(1));
+               cursor.getString(1), cursor.getString(2));
         return contact;
     }
 
@@ -78,7 +80,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 Contact contact = new Contact();
                 contact.setID(Integer.parseInt(cursor.getString(0)));
                 contact.setName(cursor.getString(1));
-               // contact.setPhoneNumber(cursor.getString(2));
+                 contact.set_imageurl(cursor.getString(2));
                 contactList.add(contact);
             } while (cursor.moveToNext());
         }
@@ -99,7 +101,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         ContentValues values = new ContentValues();
         values.put(KEY_NAME, contact.getName());
-   //     values.put(KEY_PH_NO, contact.getPhoneNumber());
+        values.put(KEY_IMAGEURL,contact.get_imageurl());
+        //     values.put(KEY_PH_NO, contact.getPhoneNumber());
 
         // updating row
         return db.update(TABLE_CONTACTS, values, KEY_ID + " = ?",
@@ -114,8 +117,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
     public void  deleteAll(){
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_CONTACTS, null, null);
+        db.delete(TABLE_CONTACTS, null,null);
         db.close();
     }
 }
-

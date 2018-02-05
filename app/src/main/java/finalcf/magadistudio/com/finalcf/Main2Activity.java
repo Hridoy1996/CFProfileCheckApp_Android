@@ -30,6 +30,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import static android.R.attr.name;
 
 public class Main2Activity extends Activity {
+    DatabaseHandler db = new DatabaseHandler(this);
     TextView tv1 ;
 
     String image1=null;
@@ -109,6 +110,7 @@ public class Main2Activity extends Activity {
 
             ImageLoaderTask imageLoaderTask = new ImageLoaderTask();
             imageLoaderTask.execute(image1);
+            db.addContact(new Contact(MainActivity.ss,image1));
         }
     }
 
@@ -137,7 +139,6 @@ public class Main2Activity extends Activity {
 
             }
         }
-
 
         private Drawable getDrawable(String address) {
             try {
