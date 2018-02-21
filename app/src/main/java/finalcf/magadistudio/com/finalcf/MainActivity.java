@@ -51,18 +51,18 @@ public class MainActivity extends Activity  {
         }
         else {
 
-        ss = name.getText().toString();
-        if (ss.isEmpty()) {
-            progressDialog.dismiss();
-            Toast.makeText(getApplication(), "Blank text", Toast.LENGTH_LONG).show();
-        } else {
-            DownloadTask task = new DownloadTask();
+            ss = name.getText().toString();
+            if (ss.isEmpty()) {
+                progressDialog.dismiss();
+                Toast.makeText(getApplication(), "Blank text", Toast.LENGTH_LONG).show();
+            } else {
+                DownloadTask task = new DownloadTask();
 
 
-            task.execute("http://codeforces.com/api/user.info?handles=" + ss);
+                task.execute("http://codeforces.com/api/user.info?handles=" + ss);
 
+            }
         }
-    }
 
     }
 
@@ -85,11 +85,11 @@ public class MainActivity extends Activity  {
 
         for(Contact cn : contacts ){
 
-                 i++;
+            i++;
         }
         String[] str=new String[i];
 
-     i=0;
+        i=0;
 
         for(Contact cn : contacts ){
 
@@ -166,7 +166,7 @@ public class MainActivity extends Activity  {
             Intent intent = new Intent(MainActivity.this, Main2Activity.class);
             progressDialog.dismiss();
 
-             if (check_json == 1) {
+            if (check_json == 1) {
                 if (chk == 1) {
 
                     startActivity(intent);
@@ -175,9 +175,9 @@ public class MainActivity extends Activity  {
                     Toast.makeText(getApplication(), " connection faild ! ", Toast.LENGTH_LONG).show();
 
             } else {
-                 Toast.makeText(getApplication(), " wrong handle name ", Toast.LENGTH_LONG).show();
-                 check_json=0;
-             }
+                Toast.makeText(getApplication(), " wrong handle name ", Toast.LENGTH_LONG).show();
+                check_json=0;
+            }
 
         }
     }
@@ -185,6 +185,4 @@ public class MainActivity extends Activity  {
 
 
 }
-
-
 

@@ -134,7 +134,6 @@ public class Main2Activity extends Activity {
             if (drawable != null) {
 
                 CircleImageView imageView = (CircleImageView) findViewById(R.id.imageView);
-             //   imageView.setBackground(drawable);
                 imageView.setImageDrawable(drawable);
 
             }
